@@ -24,7 +24,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Override
     public List<Pelicula> listarPeliculas() {
-        return (List<Pelicula>) peliculaDao.findAll();
+        return peliculaDao.findAll();
     }
 
     @Override

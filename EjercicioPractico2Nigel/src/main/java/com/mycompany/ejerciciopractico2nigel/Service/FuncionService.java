@@ -13,16 +13,8 @@ import java.util.List;
 
 
 public interface FuncionService {
-
-   
     List<Funcion> listarFunciones();
-
-    
     void guardarFuncion(Funcion funcion);
-
-
     void eliminarFuncion(Funcion funcion);
-
-   
     Funcion obtenerFuncionPorId(Long idFuncion);
 }

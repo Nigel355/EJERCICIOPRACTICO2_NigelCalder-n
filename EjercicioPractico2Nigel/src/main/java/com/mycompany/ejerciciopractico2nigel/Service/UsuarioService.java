@@ -12,6 +12,7 @@ import java.util.List;
  */
 
 
+
 public interface UsuarioService {
     Usuario buscarPorUsername(String username);
     Usuario login(String username, String password);

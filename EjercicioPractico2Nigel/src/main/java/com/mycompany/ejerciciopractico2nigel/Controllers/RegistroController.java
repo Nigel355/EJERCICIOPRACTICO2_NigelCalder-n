@@ -24,18 +24,19 @@ public class RegistroController {
     private UsuarioService usuarioService;
 
     @GetMapping("/registro")
-    public String registroForm() {
+    public String registroForm(Model model) {
+        model.addAttribute("usuario", new Usuario());
         return "registro";
     }
 
     @PostMapping("/registro")
-    public String registrar(@RequestParam String username, @RequestParam String password, Model model) {
-        boolean exito = usuarioService.registrar(new Usuario(username, password));
-        if (exito) {
-            return "redirect:/login";
-        } else {
+    public String registrarUsuario(Usuario usuario, Model model) {
+        if (usuarioService.buscarPorUsername(usuario.getUsername()) != null) {
             model.addAttribute("error", "El usuario ya existe");
             return "registro";
         }
+        usuario.setRol("USER"); 
+        usuarioService.registrar(usuario);
+        return "redirect:/login";
     }
 }

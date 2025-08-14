@@ -22,7 +22,7 @@ public class FuncionServiceImpl implements FuncionService {
 
     @Override
     public List<Funcion> listarFunciones() {
-        return (List<Funcion>) funcionDao.findAll();
+        return funcionDao.findAll();
     }
 
     @Override

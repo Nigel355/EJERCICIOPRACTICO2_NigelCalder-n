@@ -31,12 +31,18 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password,
-                        HttpSession session, Model model) {
+    public String login(@RequestParam String username,
+                        @RequestParam String password,
+                        HttpSession session,
+                        Model model) {
         Usuario usuario = usuarioService.login(username, password);
         if (usuario != null) {
             session.setAttribute("usuario", usuario);
-            return "redirect:/catalogo";
+            if("ADMIN".equals(usuario.getRol())) {
+                return "redirect:/admin/catalogo";
+            } else {
+                return "redirect:/catalogo";
+            }
         } else {
             model.addAttribute("error", "Usuario o contraseña incorrecta");
             return "login";

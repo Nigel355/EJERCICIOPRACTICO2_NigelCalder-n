@@ -13,14 +13,18 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "reserva")
 public class Reserva {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Usuario usuario;
+    @JoinColumn(name = "id_pelicula")
+    private Pelicula pelicula;
 
     @ManyToOne
-    private Funcion funcion;
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 }

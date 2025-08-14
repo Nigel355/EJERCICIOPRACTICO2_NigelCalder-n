@@ -24,7 +24,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     public List<Reserva> listarReservas() {
-        return (List<Reserva>) reservaDao.findAll();
+        return reservaDao.findAll();
     }
 
     @Override

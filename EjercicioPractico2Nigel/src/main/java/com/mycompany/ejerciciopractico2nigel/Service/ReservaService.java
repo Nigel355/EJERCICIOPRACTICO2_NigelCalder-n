@@ -11,18 +11,9 @@ import java.util.List;
  * @author nigel
  */
 
-
 public interface ReservaService {
-
-    
     List<Reserva> listarReservas();
-
-  
     void guardarReserva(Reserva reserva);
-
-   
     void eliminarReserva(Reserva reserva);
-
-    
     Reserva obtenerReservaPorId(Long idReserva);
 }

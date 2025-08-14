@@ -5,9 +5,14 @@
 
 package com.mycompany.ejerciciopractico2nigel.Controllers;
 import org.springframework.stereotype.Controller;
+
+import com.mycompany.ejerciciopractico2nigel.Domain.Pelicula;
+import com.mycompany.ejerciciopractico2nigel.Service.PeliculaService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 /**
  *
  * @author nigel
@@ -15,10 +20,20 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class CatalogoController {
 
+    @Autowired
+    private PeliculaService peliculaService;
+
     @GetMapping("/catalogo")
-    public String catalogo(HttpSession session, Model model) {
-        Object usuario = session.getAttribute("usuario");
-        model.addAttribute("usuario", usuario);
+    public String verCatalogo(Model model) {
+        List<Pelicula> peliculas = peliculaService.listarPeliculas();
+        model.addAttribute("peliculas", peliculas);
         return "catalogo";
+    }
+
+    @GetMapping("/admin/catalogo")
+    public String adminCatalogo(Model model) {
+        List<Pelicula> peliculas = peliculaService.listarPeliculas();
+        model.addAttribute("peliculas", peliculas);
+        return "admin/catalogo"; 
     }
 }

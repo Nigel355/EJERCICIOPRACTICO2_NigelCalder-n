@@ -37,10 +37,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public boolean registrar(Usuario usuario) {
-        if (usuarioDao.findByUsername(usuario.getUsername()) != null) {
-            return false; 
+        if (usuarioDao.findByUsername(usuario.getUsername()) == null) {
+            usuarioDao.save(usuario);
+            return true;
         }
-        usuarioDao.save(usuario);
-        return true;
+        return false;
     }
 }
