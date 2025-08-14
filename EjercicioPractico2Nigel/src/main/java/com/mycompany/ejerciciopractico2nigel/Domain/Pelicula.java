@@ -5,6 +5,8 @@
 package com.mycompany.ejerciciopractico2nigel.Domain;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author nigel
@@ -21,4 +23,7 @@ public class Pelicula {
     private String descripcion;
     private int duracion;
     private String director;
+
+    @OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Funcion> funciones = new ArrayList<>();
 }

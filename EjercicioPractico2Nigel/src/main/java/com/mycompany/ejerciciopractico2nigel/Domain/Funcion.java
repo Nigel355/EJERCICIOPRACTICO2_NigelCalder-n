@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Table(name = "funciones")
 public class Funcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
