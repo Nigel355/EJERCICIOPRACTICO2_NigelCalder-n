@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "reserva")
+@Table(name = "reservas")
 public class Reserva {
 
     @Id
@@ -21,10 +21,10 @@ public class Reserva {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_pelicula")
-    private Pelicula pelicula;
+    @JoinColumn(name = "funcion_id")
+    private Funcion funcion;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 }

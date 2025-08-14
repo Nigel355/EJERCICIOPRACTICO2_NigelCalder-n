@@ -11,7 +11,13 @@ package com.mycompany.ejerciciopractico2nigel.Dao;
  */
 import com.mycompany.ejerciciopractico2nigel.Domain.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface UsuarioDao extends JpaRepository<Usuario, Long> {
-    Usuario findByUsername(String username);
+
+    @Query(value = "SELECT u.id, u.username, u.password, " +
+                   "CASE WHEN u.rol_id = 1 THEN true ELSE false END AS admin " +
+                   "FROM usuarios u WHERE u.username = :username", nativeQuery = true)
+    Usuario findByUsername(@Param("username") String username);
 }

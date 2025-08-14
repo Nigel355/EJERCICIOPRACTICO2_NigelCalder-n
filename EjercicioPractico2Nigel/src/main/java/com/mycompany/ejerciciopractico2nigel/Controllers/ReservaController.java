@@ -7,6 +7,8 @@ package com.mycompany.ejerciciopractico2nigel.Controllers;
 import com.mycompany.ejerciciopractico2nigel.Domain.Reserva;
 import com.mycompany.ejerciciopractico2nigel.Domain.Usuario;
 import com.mycompany.ejerciciopractico2nigel.Domain.Pelicula;
+import com.mycompany.ejerciciopractico2nigel.Domain.Funcion;
+import com.mycompany.ejerciciopractico2nigel.Service.FuncionService;
 import com.mycompany.ejerciciopractico2nigel.Service.ReservaService;
 import com.mycompany.ejerciciopractico2nigel.Service.PeliculaService;
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class ReservaController {
-
+    @Autowired
+    private FuncionService funcionService;
     @Autowired
     private ReservaService reservaService;
 
@@ -30,20 +33,21 @@ public class ReservaController {
     private PeliculaService peliculaService;
 
     @GetMapping("/reservar")
-    public String crearReserva(@RequestParam Long idPelicula, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if (usuario == null) {
-            return "redirect:/login";
-        }
+public String crearReserva(@RequestParam Long idFuncion, HttpSession session) {
 
-        Pelicula pelicula = peliculaService.obtenerPeliculaPorId(idPelicula);
-        if (pelicula != null) {
-            Reserva reserva = new Reserva();
-            reserva.setPelicula(pelicula);
-            reserva.setUsuario(usuario);
-            reservaService.guardarReserva(reserva);
-        }
-
-        return "redirect:/catalogo";
+    Usuario usuario = (Usuario) session.getAttribute("usuarioLogeado");
+    if (usuario == null) {
+        return "redirect:/login2";
     }
+
+    Funcion funcion = funcionService.obtenerFuncionPorId(idFuncion);
+    if (funcion != null) {
+        Reserva reserva = new Reserva();
+        reserva.setFuncion(funcion);
+        reserva.setUsuario(usuario);
+        reservaService.guardarReserva(reserva);
+    }
+
+    return "redirect:/index";
+}
 }

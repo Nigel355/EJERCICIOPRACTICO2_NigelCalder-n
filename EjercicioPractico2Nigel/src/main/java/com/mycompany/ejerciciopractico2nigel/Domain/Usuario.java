@@ -25,13 +25,13 @@ public class Usuario {
 
     private String password;
 
-    private String rol; // ADMIN o USER
+    private boolean admin; 
 
     public Usuario() {}
 
-    public Usuario(String username, String password) {
+    public Usuario(String username, String password, boolean admin) {
         this.username = username;
         this.password = password;
-        this.rol = "USER";
+        this.admin = admin;
     }
 }

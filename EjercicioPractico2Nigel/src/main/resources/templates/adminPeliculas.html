@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración - Películas</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Administración de Películas y Funciones</h1>
+        <a href="/index">Volver al inicio</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>Agregar / Modificar Película</h2>
+            <form th:action="@{/admin/peliculas/guardar}" th:object="${nuevaPelicula}" method="post">
+                <input type="hidden" th:field="*{id}"/>
+                <label>Título: <input type="text" th:field="*{titulo}" required/></label><br/>
+                <label>Descripción: <textarea th:field="*{descripcion}" required></textarea></label><br/>
+                <label>Duración (min): <input type="number" th:field="*{duracion}" required/></label><br/>
+                <label>Director: <input type="text" th:field="*{director}" required/></label><br/>
+                <button type="submit">Guardar Película</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Agregar / Modificar Función (Tanda)</h2>
+            <form th:action="@{/admin/funciones/guardar}" th:object="${nuevaFuncion}" method="post">
+                <label>Película:
+                    <select th:field="*{pelicula.id}">
+                        <option th:each="p : ${peliculas}" th:value="${p.id}" th:text="${p.titulo}"></option>
+                    </select>
+                </label><br/>
+                <label>Fecha y hora: <input type="datetime-local" th:field="*{fechaHora}" required/></label><br/>
+                <label>Sala: <input type="text" th:field="*{sala}" required/></label><br/>
+                <button type="submit">Guardar Función</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Películas existentes</h2>
+            <ul>
+                <li th:each="pelicula : ${peliculas}">
+                    <strong th:text="${pelicula.titulo}">Título</strong> - 
+                    <span th:text="${pelicula.descripcion}">Descripción</span> - 
+                    <span th:text="${pelicula.director}">Director</span>
+                    <span th:text="${pelicula.duracion}">Duración</span> min
+                </li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

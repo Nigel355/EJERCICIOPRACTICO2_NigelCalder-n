@@ -11,11 +11,14 @@ import lombok.Data;
  */
 @Data
 @Entity
+@Table(name = "peliculas")
 public class Pelicula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String titulo;
     private String descripcion;
-    private String genero;
+    private int duracion;
+    private String director;
 }

@@ -27,13 +27,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario login(String username, String password) {
-        Usuario usuario = usuarioDao.findByUsername(username);
-        if (usuario != null && usuario.getPassword().equals(password)) {
-            return usuario;
-        }
-        return null;
+public Usuario login(String username, String password) {
+    Usuario usuario = usuarioDao.findByUsername(username);
+    if (usuario != null && usuario.getPassword().equals(password)) {
+        return usuario;
     }
+    return null;
+}
 
     @Override
     public boolean registrar(Usuario usuario) {

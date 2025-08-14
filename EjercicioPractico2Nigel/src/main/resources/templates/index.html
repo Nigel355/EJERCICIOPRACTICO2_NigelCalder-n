@@ -2,55 +2,47 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cine - Inicio</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Inicio - Películas</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Cine</a>
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item" th:if="${session.usuario == null}">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item" th:if="${session.usuario != null}">
-                <span class="nav-link">Bienvenido, <b th:text="${session.usuario.username}"></b></span>
-            </li>
-            <li class="nav-item" th:if="${session.usuario != null}">
-                <a class="nav-link" href="/logout">Logout</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+    <header>
+        <h1>Bienvenido a la cartelera</h1>
 
-<div class="container mt-5">
-    <h1>Películas Disponibles</h1>
-    <div class="row">
-        <div class="col-md-4 mb-3" th:each="pelicula : ${peliculas}">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${pelicula.titulo}"></h5>
-                    <p class="card-text" th:text="${pelicula.descripcion}"></p>
-                    <p class="card-text"><b>Duración:</b> <span th:text="${pelicula.duracion}"></span> min</p>
-                    <p class="card-text"><b>Director:</b> <span th:text="${pelicula.director}"></span></p>
-                    
-                    <!-- Botón reservar para usuarios -->
-                    <a th:if="${session.usuario != null and session.usuario.rol == 'USUARIO'}"
-                       th:href="@{'/reservar?idPelicula=' + ${pelicula.id}}"
-                       class="btn btn-primary">Reservar</a>
-                    
-                    <!-- Botones editar/agregar para admin -->
-                    <a th:if="${session.usuario != null and session.usuario.rol == 'ADMIN'}"
-                       th:href="@{'/editarPelicula?id=' + ${pelicula.id}}"
-                       class="btn btn-warning">Editar</a>
-                </div>
+        <!-- Usuario logeado -->
+        <div th:if="${session.usuarioLogeado != null}">
+            <p>Hola, <span th:text="${session.usuarioLogeado.username}">Usuario</span>!</p>
+            <a href="/logout2">Cerrar sesión</a>
+
+            <!-- Botón solo visible para admins -->
+            <div th:if="${session.usuarioLogeado.admin}">
+                <a href="/admin/peliculas" class="boton-admin">Gestionar películas y funciones</a>
             </div>
         </div>
-    </div>
 
-    <!-- Botón agregar película solo para ADMIN -->
-    <a th:if="${session.usuario != null and session.usuario.rol == 'ADMIN'}"
-       href="/agregarPelicula" class="btn btn-success mt-3">Agregar Película</a>
-</div>
+        <!-- Usuario no logeado -->
+        <div th:if="${session.usuarioLogeado == null}">
+            <a href="/login2">Iniciar sesión</a>
+            <a href="/registro">Registrarse</a>
+        </div>
+    </header>
+
+    <main>
+        <h2>Películas disponibles</h2>
+        <div>
+            <ul>
+                <li th:each="pelicula : ${peliculas}">
+                    <h3 th:text="${pelicula.titulo}">Título</h3>
+                    <p th:text="${pelicula.descripcion}">Descripción</p>
+                    <p><strong>Director:</strong> <span th:text="${pelicula.director}">Director</span></p>
+                    <p><strong>Duración:</strong> <span th:text="${pelicula.duracion}">Duración</span> minutos</p>
+
+                    <!-- Botón reservar solo si está logeado -->
+                    <a th:href="@{/reservar(idPelicula=${pelicula.id})}" 
+                       th:if="${session.usuarioLogeado != null}">Reservar</a>
+                </li>
+            </ul>
+        </div>
+    </main>
 </body>
 </html>

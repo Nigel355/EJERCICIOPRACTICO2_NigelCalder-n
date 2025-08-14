@@ -19,7 +19,7 @@ public class Funcion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime fechaHora;
-
+    private String sala;
     @ManyToOne
     @JoinColumn(name = "pelicula_id")
     private Pelicula pelicula;

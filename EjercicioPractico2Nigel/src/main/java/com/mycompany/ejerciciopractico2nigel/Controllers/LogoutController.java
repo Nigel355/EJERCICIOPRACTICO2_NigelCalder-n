@@ -12,12 +12,15 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author nigel
  */
+
+
 @Controller
 public class LogoutController {
 
-    @GetMapping("/logout")
+    @GetMapping("/logout2")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/login";
+        return "redirect:/login2";
     }
+
 }

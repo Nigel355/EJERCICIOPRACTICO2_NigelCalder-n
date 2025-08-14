@@ -6,13 +6,13 @@
 package com.mycompany.ejerciciopractico2nigel.Controllers;
 import com.mycompany.ejerciciopractico2nigel.Domain.Usuario;
 import com.mycompany.ejerciciopractico2nigel.Service.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import jakarta.servlet.http.HttpSession;
 /**
  *
  * @author nigel
@@ -25,27 +25,23 @@ public class LoginController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/login")
+    @GetMapping("/login2")
     public String loginForm() {
-        return "login";
+        return "login2"; 
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login2")
     public String login(@RequestParam String username,
                         @RequestParam String password,
                         HttpSession session,
                         Model model) {
         Usuario usuario = usuarioService.login(username, password);
         if (usuario != null) {
-            session.setAttribute("usuario", usuario);
-            if("ADMIN".equals(usuario.getRol())) {
-                return "redirect:/admin/catalogo";
-            } else {
-                return "redirect:/catalogo";
-            }
+            session.setAttribute("usuarioLogeado", usuario);
+            return "redirect:/index";
         } else {
             model.addAttribute("error", "Usuario o contraseña incorrecta");
-            return "login";
+            return "login2";
         }
     }
 }
